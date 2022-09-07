@@ -27,11 +27,19 @@
 							اتصل بنا
 						</a>
 					</li>
-					<li>
-						<a href="#top" data-toggle="modal" data-target="#exampleModal">
-							Login
-						</a>
-					</li>
+					@if(!auth()->check())
+						<li>
+							<a href="#top" data-toggle="modal" data-target="#exampleModal">
+								Login
+							</a>
+						</li>
+					@else
+						<li>
+							<a href="{{route('get.logout')}}" data-toggle="Modal" data-target="Logout">
+								Logout
+							</a>
+						</li>
+					@endif
 				</ul>
 			</div>
 		</div>

@@ -17,13 +17,13 @@
         role="document"
       >
 
-        <div class="modal-content">  
+        <div class="modal-content">
          <div class="modal-header">
         <h5 class="modal-title">Login</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>  
+      </div>
           <div class="modal-body">
           <div class="form-group">
             <label for="">User Emial</label>
@@ -56,39 +56,46 @@ export default {
   data(){
       return {
           form:{
-              email: '', 
-              password: '', 
-              remeberme:true, 
-              _token: window.token, 
+              email: 'jksa@gmail.com',
+              password: '123456',
+              remeberme:true,
+              _token: window.token,
           }
       };
-  }, 
+  },
   methods:{
     ShowAlert(meesage){
       this.$swal(meesage);
-    }, 
+    },
       SubmitForm(){
         var Form = {
-          "_token" : window.csrf_token, 
-          "email" : this.form.email, 
-          "password" : this.form.password, 
+          "_token" : window.csrf_token,
+          "email" : this.form.email,
+          "password" : this.form.password,
         };
       console.log(window.token);
         // console.log(Form);
         window.axios.post('http://localhost:8000/login', Form ).then(function(res){
+            return res;
+        }).then(res =>  {
             console.log(res);
-        this.ShowAlert("Login Success");
-            
-        }).catch(err => {
-           console.log(err.message);
-          //  console.log(err.data);
-          this.ShowAlert("In Valid Credinatials");
+            if(res.status !== 200){
+                 this.ShowAlert("In Valid Credinatials");
+            }else{
+                this.ShowAlert("Login Success");
+                // setTimeout(() => location.reload() , 2000);
+            }
         });
-      }, 
+        // catch(err => {
+        //    console.log(err.message);
+        //   //  console.log(err.data);
+        // //   this.ShowAlert("In Valid Credinatials");
+        // });
+      },
       IsValidForm(){
             // console.log(this.emailValid());
             return this.emailValid() && this.form.password;
-        }, 
+        },
         emailValid(){
             return/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.form.email);
         }

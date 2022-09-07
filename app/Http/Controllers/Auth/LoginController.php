@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo ='/';
 
     /**
      * Create a new controller instance.
@@ -42,6 +42,17 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        return 'Jksa Altingai osam';
+        // return $request;
+        // if($request->ajax()){
+            return response()->json([
+                'logined' => 'ok'
+            ]);
+        // }
+    }
+
+    public function sendFailedLoginResponse(){
+        return response()->json([
+            'Message' => 'In Valid Data'
+        ], 422);
     }
 }

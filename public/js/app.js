@@ -5342,8 +5342,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: {
-        email: '',
-        password: '',
+        email: 'jksa@gmail.com',
+        password: '123456',
         remeberme: true,
         _token: window.token
       }
@@ -5364,13 +5364,21 @@ __webpack_require__.r(__webpack_exports__);
       console.log(window.token); // console.log(Form);
 
       window.axios.post('http://localhost:8000/login', Form).then(function (res) {
+        return res;
+      }).then(function (res) {
         console.log(res);
-        this.ShowAlert("Login Success");
-      })["catch"](function (err) {
-        console.log(err.message); //  console.log(err.data);
 
-        _this.ShowAlert("In Valid Credinatials");
-      });
+        if (res.status !== 200) {
+          _this.ShowAlert("In Valid Credinatials");
+        } else {
+          _this.ShowAlert("Login Success"); // setTimeout(() => location.reload() , 2000);
+
+        }
+      }); // catch(err => {
+      //    console.log(err.message);
+      //   //  console.log(err.data);
+      // //   this.ShowAlert("In Valid Credinatials");
+      // });
     },
     IsValidForm: function IsValidForm() {
       // console.log(this.emailValid());

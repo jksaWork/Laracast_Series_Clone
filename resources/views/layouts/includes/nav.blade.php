@@ -19,13 +19,18 @@
             </div>
             <div class="nav_links">
                 <ul>
+                    @auth
+                    <li class='{{-- !request()->routeIs('contact')?:'active' --}}'>
+                        <a href="{{ route('get.logout') }}">Log Out</a>
+                    </li>
+                    @endauth
                     <li class='{{-- !request()->routeIs('contact')?:'active' --}}'>
                         <a href="{{-- route('contact') --}}">اتصل بنا</a>
                     </li>
                     <li class='{{-- !request()->routeIs('Articals')?:'active' --}}'>
                         <a href="{{-- route('Articals') --}}">المقالات</a>
                     </li>
-                    <li class='='{{-- !request()->routeIs('howUs')?:'active' --}}'>
+                    <li class='{{-- !request()->routeIs('howUs')?:'active' --}}'>
                         <a href="{{-- route('howUs') --}}">عن المدونه ؟</a>
                     </li>
                 </ul>
