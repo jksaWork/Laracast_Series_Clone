@@ -28,14 +28,21 @@
 						</a>
 					</li>
 					<li>
-						<a href="#top">
-							العوده لاعلي
+						<a href="#top" data-toggle="modal" data-target="#exampleModal">
+							Login
 						</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</div>
+	<div>
+                    {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Launch demo modal
+                    </button> --}}
+                      <!-- Modal -->
+                    <Login></Login>
+                    </div>
 </footer>
 </body>
 

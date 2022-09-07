@@ -19,14 +19,14 @@
             </div>
             <div class="nav_links">
                 <ul>
-                    <li class='{{ !request()->routeIs('contact')?:'active' }}'>
-                        <a href="{{ route('contact') }}">اتصل بنا</a>
+                    <li class='{{-- !request()->routeIs('contact')?:'active' --}}'>
+                        <a href="{{-- route('contact') --}}">اتصل بنا</a>
                     </li>
-                    <li class='{{ !request()->routeIs('Articals')?:'active' }}'>
-                        <a href="{{ route('Articals') }}">المقالات</a>
+                    <li class='{{-- !request()->routeIs('Articals')?:'active' --}}'>
+                        <a href="{{-- route('Articals') --}}">المقالات</a>
                     </li>
-                    <li class='='{{ !request()->routeIs('howUs')?:'active' }}'>
-                        <a href="{{ route('howUs') }}">عن المدونه ؟</a>
+                    <li class='='{{-- !request()->routeIs('howUs')?:'active' --}}'>
+                        <a href="{{-- route('howUs') --}}">عن المدونه ؟</a>
                     </li>
                 </ul>
             </div>
