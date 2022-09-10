@@ -4,7 +4,7 @@
             <div class="d-flex justify-content-between">
                 <div class="col-md-6">
 
-                    <create-lesson :seriesid='formatedLessons[0].series_id'></create-lesson>
+                    <create-lesson :seriesid='lessons[0].series_id'></create-lesson>
                 </div>
                 <div class="col-md-6">
                     <h2 class="custom_head"><span> Lessons </span></h2>
@@ -14,8 +14,9 @@
             <div class="latest_post_container">
                 <div
                     class="latest_post"
-                    v-for="lesson in formatedLessons"
-                    :key="lesson"
+                    style='margin-top:20px'
+                    v-for="lesson in lessons"
+                    :key="lesson.id"
                 >
                     <div class="latest_post_data">
                         <div>
@@ -57,11 +58,15 @@ export default {
     props: ["default_lessons"],
     data() {
         return {
-            lessons: this.default_lessons,
+            lessons: JSON.parse(this.default_lessons),
         };
     },
     mounted() {
         console.log(this.lessons);
+        this.$on('IncreaseLesson' , (data)=> {
+            console.log(data);
+            this.lessons.push(data);
+        });
     },
     methods: {
         ShowModal() {
@@ -69,10 +74,6 @@ export default {
             this.$emit("show_modal_in_child");
         },
     },
-    computed: {
-        formatedLessons() {
-            return JSON.parse(this.lessons);
-        },
-    },
+    
 };
 </script>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LessonRequest;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
 
@@ -33,9 +34,10 @@ class LessonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(\App\Models\Series $series, Request $request)
+    public function store(\App\Models\Series $series, LessonRequest $request)
     {
-        dd($series);
+        $Lesson = $series->Lessons()->create($request->all());
+        return response()->json(['status' => true , 'data' => $Lesson]);
     }
 
     /**

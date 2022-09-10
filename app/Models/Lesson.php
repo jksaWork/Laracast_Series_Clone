@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Lesson extends Model
 {
     use HasFactory;
-
+    protected $guarded = [];
     public function Series(){
         return $this->belongsTo(Series::class);
     }

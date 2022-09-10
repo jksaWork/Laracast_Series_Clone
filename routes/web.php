@@ -35,7 +35,7 @@ Route::get('mail', fn() => new RegisterMail(User::find(1)));
 
 Route::prefix('admin')->group(function(){
     Route::resource('series' , SeriesController::class)->middleware('admin');
-    Route::resource('{get_series}/lessons' , LessonController::class);
+    Route::resource('{get_series}/lessons' , App\Http\Controllers\LessonController::class);
 });
 
 // Route::get('series' , function(){
