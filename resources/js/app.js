@@ -24,6 +24,8 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('Login', require('./components/Login.vue').default);
+Vue.component('lesson-list', require('./components/LessonsList.vue').default);
+Vue.component('create-lesson', require('./components/Children/create_lesson.vue').default);
 Vue.use(VueSweetalert2);
 /**
  * Next, we will create a fresh Vue application instance and attach it to

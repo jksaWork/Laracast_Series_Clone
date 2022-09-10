@@ -12,5 +12,5 @@ class ConfigrationControler extends Controller
         $id = decrypt($id);
         User::find($id)->update(['account_verfied' => 1]);
         return redirect()->to('/');
-    }
+}
 }

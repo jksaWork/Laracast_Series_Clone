@@ -47,6 +47,17 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
+        # Route Serives Provider 
+        Route::model('get_series' , Series::class);
+        Route::bind('get_series' , function($value){
+            return \App\Models\Series::findOrFail($value);
+        });
+
+        // # UsageWeb.php
+        // Route::get('{user_id}', function(User $user){
+        //     return $user;
+        // });
+
     }
 
     /**

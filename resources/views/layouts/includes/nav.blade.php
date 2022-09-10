@@ -2,7 +2,7 @@
     <div class="custom_container">
         <div class="align_item">
             <div class="text-right  logo">
-                <h3> <a href="index.php" class="logo_link">مدونه نقره <img src="design/img/logo.png" alt=""
+                <h3> <a href="index.php" class="logo_link"> laracast Clone <img src="design/img/logo.png" alt=""
                             class="nav_img"></a></h3>
                 <div class="custom_icon" onclick="
 				let head = document.querySelector('.nav_links');
@@ -21,11 +21,11 @@
                 <ul>
                     @auth
                     <li class='{{-- !request()->routeIs('contact')?:'active' --}}'>
-                        <a href="{{ route('get.logout') }}">Log Out</a>
+                        <a href="{{ route('get.logout') }}">Logout</a>
                     </li>
                     @endauth
                     <li class='{{-- !request()->routeIs('contact')?:'active' --}}'>
-                        <a href="{{-- route('contact') --}}">اتصل بنا</a>
+                        <a href="{{-- route('contact') --}}">Series</a>
                     </li>
                     <li class='{{-- !request()->routeIs('Articals')?:'active' --}}'>
                         <a href="{{-- route('Articals') --}}">المقالات</a>

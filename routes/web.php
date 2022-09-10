@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ConfigrationControler;
+use App\Http\Controllers\SeriesController;
 use App\Mail\RegisterMail;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +33,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('mail', fn() => new RegisterMail(User::find(1)));
 
+Route::prefix('admin')->group(function(){
+    Route::resource('series' , SeriesController::class)->middleware('admin');
+    Route::resource('{get_series}/lessons' , LessonController::class);
+});
+
+// Route::get('series' , function(){
+
+// })
+Route::get('{user_id}', function(User $user){
+    return $user;
+});

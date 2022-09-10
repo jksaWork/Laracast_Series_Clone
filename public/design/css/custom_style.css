@@ -101,7 +101,7 @@ nav {
   margin: 0;
 }
 .nav_links ul li {
-  font-size: 20px;
+  font-size: 15px;
   margin: 10px;
 }
 .nav_links ul li a {
@@ -531,3 +531,25 @@ footer {
   box-shadow: 0 0 18px rgb(0 0 0 / 10%);
   padding: 50px 10px;
 }
+
+.main_image_container{
+    width: 100%;
+    background-color: #eabec6;
+    background-size: cover;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main_image_container > div{
+    width: 60%;
+    margin: auto;
+}
+
+.main_image_container > div h1 , .main_image_container > div h5{
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+}
+
