@@ -256,6 +256,9 @@ nav {
   border-radius: 5px;
   align-items: center;
 }
+.latest_post > div{
+    margin: 10px;
+}
 .latest_post_data {
   max-width: 90%;
   flex: 1;

@@ -23,9 +23,10 @@ class DatabaseSeeder extends Seeder
         Series::factory()->create()->Lessons()->create([
             'title' => 'mohammed',
             'description' => 'mohammed',
-            'episode_number' =>200,
+            'episode_number' => 200,
             'vedio_id' => 200,
         ]);
         Lesson::factory(10)->create();
     }
 }
+

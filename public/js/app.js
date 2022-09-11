@@ -5319,6 +5319,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var sweetalert2_src_sweetalert2_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2/src/sweetalert2.scss */ "./node_modules/sweetalert2/src/sweetalert2.scss");
 
+ // import $ from 'jquery';
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5332,10 +5333,22 @@ __webpack_require__.r(__webpack_exports__);
       console.log("jksa");
       console.log(_this.seriesid);
     });
+    this.$parent.$on('edit_lesson', function (lesson) {
+      // console.log(lesson);
+      $("#AddLesson").modal('show');
+      _this.editing_mode = true;
+      _this.form.title = lesson.title;
+      _this.form.description = lesson.description;
+      _this.form.vedio_id = lesson.vedio_id;
+      _this.form.episode_number = lesson.episode_number;
+      _this.lesson_id = lesson.id;
+    });
   },
   data: function data() {
     return {
       series: this.seriesid,
+      editing_mode: false,
+      lesson_id: null,
       form: {
         title: '',
         vedio_id: '',
@@ -5351,6 +5364,7 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('http://127.0.0.1:8000/admin/' + this.series + '/lessons', this.form).then(function (res) {
         if (res.status = 200) {
           sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_1___default().fire('Good job!', 'Has Added Sccuessfuly', 'success');
+          $("#AddLesson").modal('hide');
           console.log(res.data.data);
 
           _this2.$parent.$emit('IncreaseLesson', res.data.data);
@@ -5366,7 +5380,31 @@ __webpack_require__.r(__webpack_exports__);
           confirmButtonText: 'Cool'
         });
       });
-    }
+    },
+    UpdateLesson: function UpdateLesson() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().put('http://127.0.0.1:8000/admin/' + this.series + '/lessons/' + this.lesson_id, this.form).then(function (res) {
+        if (res.status = 200) {
+          sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_1___default().fire('Good job!', 'Lesson Update Sccuessfuley ', 'success');
+          console.log(res.data.data);
+          $("#AddLesson").modal('hide');
+
+          _this3.$parent.$emit('UpdateLesson', res.data.data);
+        }
+
+        console.log(res);
+      })["catch"](function (err) {
+        console.log(err);
+        sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_1___default().fire({
+          title: 'Error!',
+          text: 'Do you want to continue',
+          icon: 'error',
+          confirmButtonText: 'Cool'
+        });
+      });
+    } // end Update Lesson  Method
+
   }
 });
 
@@ -5402,6 +5440,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2/dist/sweetalert2.js */ "./node_modules/sweetalert2/dist/sweetalert2.js");
+/* harmony import */ var sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_1__);
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "lesson-list",
   props: ["default_lessons"],
@@ -5419,11 +5463,58 @@ __webpack_require__.r(__webpack_exports__);
 
       _this.lessons.push(data);
     });
+    this.$on('UpdateLesson', function (data) {
+      var lessonIndex = _this.lessons.findIndex(function (i) {
+        return i == data.id;
+      });
+
+      _this.lessons.splice(lessonIndex, 1, data);
+    });
   },
   methods: {
     ShowModal: function ShowModal() {
       console.log("before_moutend");
       this.$emit("show_modal_in_child");
+    },
+    EditLesson: function EditLesson(lesson) {
+      this.$emit('edit_lesson', lesson);
+    },
+    DeleteItem: function DeleteItem(lesson) {
+      var _this2 = this;
+
+      // alert('jksa ' +id );
+      sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_1___default().fire({
+        title: 'Are Tou Want Delete The Lesseon?',
+        // showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Delete' // denyButtonText: `Delete`,
+
+      }).then(function (result) {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          _this2.deleteLessonAjax(lesson.id);
+        } else if (result.isDenied) {
+          sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_1___default().fire('Delete Item Was Canceld', '', 'info');
+        }
+      });
+    },
+    deleteLessonAjax: function deleteLessonAjax(id) {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]('http://127.0.0.1:8000/admin/' + this.lessons[0].series_id + '/lessons/' + id).then(function (res) {
+        _this3.lessons = _this3.lessons.filter(function (el) {
+          return el.id !== id;
+        });
+        console.log(_this3.lessons);
+        sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_1___default().fire(res.data.message, '', 'success');
+      })["catch"](function (err) {
+        console.log(err);
+        sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_1___default().fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!'
+        });
+      });
     }
   }
 });
@@ -5527,7 +5618,7 @@ var render = function render() {
   }, [_vm._v("\n        Launch demo modal\n    ")]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
-      id: "exampleModal",
+      id: "AddLesson",
       tabindex: "-1",
       role: "dialog",
       "aria-labelledby": "exampleModalLabel",
@@ -5682,7 +5773,7 @@ var render = function render() {
       type: "button",
       "data-dismiss": "modal"
     }
-  }, [_vm._v("\n                        Close\n                    ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n                        Close\n                    ")]), _vm._v(" "), !_vm.editing_mode ? _c("button", {
     staticClass: "btn btn-primary",
     attrs: {
       type: "button"
@@ -5692,7 +5783,17 @@ var render = function render() {
         return _vm.CreateLesson();
       }
     }
-  }, [_vm._v("\n                        Create Lesson\n                    ")])])])])])]);
+  }, [_vm._v("\n                        Create Lesson\n                    ")]) : _c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.UpdateLesson();
+      }
+    }
+  }, [_vm._v("\n                        Update Lesson\n                    ")])])])])])]);
 };
 
 var staticRenderFns = [function () {
@@ -5802,6 +5903,22 @@ var render = function render() {
         "margin-top": "20px"
       }
     }, [_c("div", {
+      staticClass: "latest_post_button"
+    }, [_c("span", {
+      staticClass: "btn btn-sm btn-danger",
+      on: {
+        click: function click($event) {
+          return _vm.DeleteItem(lesson);
+        }
+      }
+    }, [_vm._v("\n                        Delete\n                    ")]), _vm._v(" "), _c("span", {
+      staticClass: "btn btn-sm btn-info",
+      on: {
+        click: function click($event) {
+          return _vm.EditLesson(lesson);
+        }
+      }
+    }, [_vm._v("\n                        Edit\n                    ")])]), _vm._v(" "), _c("div", {
       staticClass: "latest_post_data"
     }, [_c("div", [_c("a", {
       staticClass: "index_link",
@@ -6009,7 +6126,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
- // If you don't need the styles, do not connect
+ // global.jQuery = require('jquery');
+// window.$ = global.jQuery;
+// If you don't need the styles, do not connect
 
 
 /**
@@ -45662,7 +45781,7 @@ Vue.compile = compileToFunctions;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"Promise based HTTP client for the browser and node.js","main":"index.js","scripts":{"test":"grunt test","start":"node ./sandbox/server.js","build":"NODE_ENV=production grunt build","preversion":"npm test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json","postversion":"git push && git push --tags","examples":"node ./examples/server.js","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","fix":"eslint --fix lib/**/*.js"},"repository":{"type":"git","url":"https://github.com/axios/axios.git"},"keywords":["xhr","http","ajax","promise","node"],"author":"Matt Zabriskie","license":"MIT","bugs":{"url":"https://github.com/axios/axios/issues"},"homepage":"https://axios-http.com","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"jsdelivr":"dist/axios.min.js","unpkg":"dist/axios.min.js","typings":"./index.d.ts","dependencies":{"follow-redirects":"^1.14.0"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}]}');
+module.exports = JSON.parse('{"_args":[["axios@0.21.4","/home/jksaaltigani/Desktop/Laravel Projects/Laracast_Series_Clone"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"/home/jksaaltigani/Desktop/Laravel Projects/Laracast_Series_Clone","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
 
 /***/ })
 

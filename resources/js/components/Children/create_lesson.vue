@@ -13,7 +13,7 @@
         <!-- Modal -->
         <div
             class="modal fade"
-            id="exampleModal"
+            id="AddLesson"
             tabindex="-1"
             role="dialog"
             aria-labelledby="exampleModalLabel"
@@ -42,8 +42,7 @@
                                 class="form-control" name=""  v-model="form.title" id="" aria-describedby="helpId" placeholder="">
                               <small id="helpId" class="form-text text-muted">Help text</small>
                             </div>
-
-
+                            <!-- epodide number -->
                             <div class="form-group">
                               <label for="">epodide number</label>
                               <input type="text"
@@ -73,8 +72,11 @@
                         >
                             Close
                         </button>
-                        <button type="button" @click='CreateLesson()' class="btn btn-primary">
+                        <button type="button" @click='CreateLesson()' class="btn btn-primary" v-if="!editing_mode">
                             Create Lesson
+                        </button>
+                        <button type="button" @click='UpdateLesson()' class="btn btn-primary" v-else>
+                            Update Lesson
                         </button>
                     </div>
                 </div>
@@ -86,7 +88,7 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-
+// import $ from 'jquery';
 import 'sweetalert2/src/sweetalert2.scss'
 export default {
     name: "create-lesson",
@@ -97,10 +99,22 @@ export default {
             console.log("jksa");
             console.log(this.seriesid);
         });
+        this.$parent.$on('edit_lesson',(lesson) =>{
+            // console.log(lesson);
+            $("#AddLesson").modal('show');
+            this.editing_mode = true;
+            this.form.title =lesson.title;
+            this.form.description =lesson.description;
+            this.form.vedio_id =lesson.vedio_id;
+            this.form.episode_number =lesson.episode_number;
+            this.lesson_id = lesson.id
+        })
     },
     data(){
         return {
             series:this.seriesid,
+            editing_mode: false,
+            lesson_id: null,
             form:{
                 title:'',
                 vedio_id:'',
@@ -118,6 +132,7 @@ export default {
                         'Has Added Sccuessfuly',
                         'success'
                     );
+                    $("#AddLesson").modal('hide');
                     console.log(res.data.data);
                     this.$parent.$emit('IncreaseLesson' , res.data.data);
                 }
@@ -131,7 +146,32 @@ export default {
                     confirmButtonText: 'Cool'
                     })
             })
-        }
+
+        },
+        UpdateLesson(){
+            axios.put('http://127.0.0.1:8000/admin/' +this.series+ '/lessons/' + this.lesson_id, this.form).then(res => {
+                if(res.status = 200){
+                    Swal.fire(
+                        'Good job!',
+                        'Lesson Update Sccuessfuley ',
+                        'success'
+                    );
+                    console.log(res.data.data);
+                    $("#AddLesson").modal('hide');
+
+                    this.$parent.$emit('UpdateLesson' , res.data.data);
+                }
+                    console.log(res);
+            }).catch(err=>{
+                console.log(err);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Do you want to continue',
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                    })
+            })
+        } // end Update Lesson  Method
     }
 };
 </script>
