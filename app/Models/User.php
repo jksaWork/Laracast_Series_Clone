@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Redis;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -50,5 +51,29 @@ class User extends Authenticatable
             'admin@gmail.com',
             'admin1@gmail.com'
         ]);
+    }
+
+    public function completLesson(Lesson $lesson){
+        Redis::sadd("user:{$this->id}::series:{$lesson->Series->id}",[$lesson->id] );
+    }
+    /**
+     * to get The Presatage
+     * @param \App\Mdoels\Series $series;
+     */
+    public function getSeriesCompletedPresage(Series $series){
+        $seriesLessonCount =  $series->Lessons->count();
+        $completedLesson = $this->getSeriesCompleateLesson($series);
+        return ($completedLesson / $seriesLessonCount) *100;
+    }
+
+
+     /**
+     * to get The series Compleate Lesson
+     * @param \App\Mdoels\Series $series;
+     */
+    public function getSeriesCompleateLesson(Series $series){
+        // return Redis::smembers();
+        $value = Redis::smembers("user:{$this->id}::series:{$series->id}");
+        return count($value);
     }
 }

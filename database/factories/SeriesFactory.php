@@ -17,7 +17,7 @@ class SeriesFactory extends Factory
         return [
             'title' => $title,
             "slug" => Str::slug($title),
-            'description' =>  $this->faker->sentence(30) ,
+            'description' =>  $this->faker->sentence(10) ,
             'image_url' => $this->faker->imageUrl(),
         ];
     }

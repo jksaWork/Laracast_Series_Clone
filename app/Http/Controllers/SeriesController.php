@@ -16,7 +16,8 @@ class SeriesController extends Controller
      */
     public function index()
     {
-
+        $series = Series::paginate();
+        return view('admin.series.index' , compact('series'));
     }
 
     /**
@@ -62,7 +63,7 @@ class SeriesController extends Controller
      */
     public function edit(Series $series)
     {
-        //
+        return view('admin.series.edit', compact('series'));
     }
 
     /**
@@ -72,9 +73,11 @@ class SeriesController extends Controller
      * @param  \App\Models\Series  $series
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Series $series)
+    public function update(SeriresRequest $request, Series $series)
     {
-        //
+        // dd($series);
+        $request->StoreImage()->UpdateSeries($series);
+        return redirect()->route('series.index');
     }
 
     /**

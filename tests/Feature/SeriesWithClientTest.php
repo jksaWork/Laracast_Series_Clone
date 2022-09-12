@@ -19,26 +19,26 @@ class SeriesWithClientTest extends TestCase
      *
      * @return void
      */
-    public function test_Admin_Can_Make_Serires()
-    {
-        $this->withoutExceptionHandling();
-        Storage::fake(config('filesystems.default'));
-        $title = 'Hello Jksa Altigani';
-        $user = User::factory()->create(['email' => 'admin@gmail.com']);
-        $this->actingAs($user, 'web');
-        $response = $this->post(route('series.store'), [
-            'image_url' => UploadedFile::fake()->image('image.png'),
-            'title' =>  $title,
-            'description' => "Some Description",
-        ]);
-        // dd(Series::all());
-        $response->assertRedirect();
-        // dd($response);
-        // dd(Series::all());
+    // public function test_Admin_Can_Make_Serires()
+    // {
+    //     $this->withoutExceptionHandling();
+    //     Storage::fake(config('filesystems.default'));
+    //     $title = 'Hello Jksa Altigani';
+    //     // $user = User::factory()->create(['email' => 'admin@gmail.com']);
+    //     // $this->actingAs($user, ');
+    //     $response = $this->post(route('series.store'), [
+    //         'image_url' => UploadedFile::fake()->image('image.png', 20 , 20 ),
+    //         'title' =>  $title,
+    //         'description' => "Some Description",
+    //     ]);
+    //     // dd(Series::all());
+    //     $response->assertRedirect();
+    //     // dd($response);
+    //     // dd(Series::all());
 
-        $this->assertDatabaseHas('series', [
-            'slug' => Str::slug($title),
-        ]);
-        Storage::disk(config('filesystems.default'))->assertExists('series/' . Str::slug($title) . '.png');
-    }
+    //     $this->assertDatabaseHas('series', [
+    //         'slug' => Str::slug($title),
+    //     ]);
+    //     Storage::disk(config('filesystems.default'))->assertExists('series/' . Str::slug($title) . '.png');
+    // }
 }

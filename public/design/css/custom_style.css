@@ -9,6 +9,7 @@ a:hover {
 
 .custom_head {
   margin-bottom: 50px;
+  /* text-align: center; */
 }
 .custom_head span {
   position: relative;
@@ -264,7 +265,7 @@ nav {
   flex: 1;
 }
 .latest_post_img {
-  max-width: 10%;
+  max-width: 30%;
   flex: 1;
 }
 .latest_post:hover {

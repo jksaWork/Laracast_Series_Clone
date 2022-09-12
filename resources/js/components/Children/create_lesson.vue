@@ -5,9 +5,9 @@
             type="button"
             class="btn btn-primary"
             data-toggle="modal"
-            data-target="#exampleModal"
+            data-target="#AddLesson"
         >
-            Launch demo modal
+        Create Lesson
         </button>
 
         <!-- Modal -->
@@ -90,6 +90,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 // import $ from 'jquery';
 import 'sweetalert2/src/sweetalert2.scss'
+import Lesson from '../../Helpers/Lesson.js';
+
 export default {
     name: "create-lesson",
     props: ['seriesid'],
@@ -115,12 +117,12 @@ export default {
             series:this.seriesid,
             editing_mode: false,
             lesson_id: null,
-            form:{
-                title:'',
-                vedio_id:'',
-                episode_number:'',
-                description:'',
-            }
+                form:{
+                    title:'',
+                    vedio_id:'',
+                    episode_number:'',
+                    description:'',
+                }
         }
     },
     methods:{
@@ -158,7 +160,7 @@ export default {
                     );
                     console.log(res.data.data);
                     $("#AddLesson").modal('hide');
-
+                    this.edit_lesson = false;
                     this.$parent.$emit('UpdateLesson' , res.data.data);
                 }
                     console.log(res);

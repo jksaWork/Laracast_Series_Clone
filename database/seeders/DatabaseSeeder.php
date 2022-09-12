@@ -20,11 +20,14 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => bcrypt('123456'),
         ]);
-        Series::factory()->create()->Lessons()->create([
+        Series::factory()->create([
+            'image_url' => 'series/alwifaq.png',
+        ])->Lessons()->create([
             'title' => 'mohammed',
             'description' => 'mohammed',
             'episode_number' => 200,
             'vedio_id' => 200,
+
         ]);
         Lesson::factory(10)->create();
     }

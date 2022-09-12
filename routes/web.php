@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ConfigrationControler;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\SeriesController;
 use App\Mail\RegisterMail;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 use App\Models\User;
+use Illuminate\Support\Facades\Redis;
 
+Route::get('redis', function(){
+    dd(Redis::get('hello'));
+});
 Route::get('/', function () {
     return view('test');
 });
@@ -30,17 +35,12 @@ Route::get('logout' , function() {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('series' , [FrontController::class , 'index'])->name('series.front');
 Route::get('mail', fn() => new RegisterMail(User::find(1)));
-
-Route::prefix('admin')->group(function(){
-    Route::resource('series' , SeriesController::class)->middleware('admin');
-    Route::resource('{get_series}/lessons' , App\Http\Controllers\LessonController::class);
-});
-
-// Route::get('series' , function(){
-
-// })
-Route::get('{user_id}', function(User $user){
-    return $user;
-});
+    Route::prefix('admin')->group(function(){
+        Route::resource('series' , SeriesController::class);
+        Route::resource('{get_series}/lessons' , App\Http\Controllers\LessonController::class);
+    });
+// Route::get('{user_id}', function(User $user){
+//     return $user;
+// });

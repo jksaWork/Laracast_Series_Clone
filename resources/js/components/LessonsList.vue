@@ -70,8 +70,9 @@ export default {
             this.lessons.push(data);
         });
         this.$on('UpdateLesson' , (data) => {
-            let lessonIndex = this.lessons.findIndex(i => i == data.id);
+            let lessonIndex = this.lessons.findIndex(i => i.id == data.id);
             this.lessons.splice(lessonIndex , 1 , data);
+            console.log(this.lessons , lessonIndex);
         })
     },
     methods: {

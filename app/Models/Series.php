@@ -15,7 +15,7 @@ class Series extends Model
     }
 
     public function getImageUrlAttribute($key){
-        return asset($key);
+        return asset('storage/' .$key);
     }
 
     // Relations
