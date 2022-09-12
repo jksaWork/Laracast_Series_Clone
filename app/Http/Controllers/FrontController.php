@@ -9,7 +9,10 @@ class FrontController extends Controller
 {
     public function index(){
         $series = Series::get();
-        // dd($series);
         return view('front.index', compact('series'));
+    }
+
+    public function show(Series $series){
+        return view('front.show_series', compact('series'));
     }
 }

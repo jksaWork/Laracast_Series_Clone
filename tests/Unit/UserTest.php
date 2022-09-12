@@ -60,12 +60,32 @@ class UserTest extends TestCase
         $lesson = Lesson::factory()->create(
             ['series_id' => $series->id]
         );
-        $lesson = Lesson::factory()->create(
+        $lesson2 = Lesson::factory()->create(
             ['series_id' => $series->id]
         );
 
         $user->completLesson($lesson);
         $value = $user->getSeriesCompletedPresage($series);
         $this->assertEquals($value, 50);
+    }
+
+    public function test_a_user_has_start_a_series_or_not(){
+        $this->withoutExceptionHandling();
+        $this->flashRedis();
+        $user = User::factory()->create();
+        $series = Series::factory()->create();
+        $series2 = Series::factory()->create();
+        $lesson = Lesson::factory()->create(
+            ['series_id' => $series->id]
+        );
+        $lesson2 = Lesson::factory()->create(
+            ['series_id' => $series2->id]
+        );
+
+        $user->completLesson($lesson);
+        // assertions Setions
+        $this->assertTrue($user->hasSatredSeries($series));
+        $this->assertFalse($user->hasSatredSeries($series2));
+
     }
 }

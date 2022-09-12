@@ -28,10 +28,10 @@
                         <a href="{{-- route('contact') --}}">Series</a>
                     </li>
                     <li class='{{-- !request()->routeIs('Articals')?:'active' --}}'>
-                        <a href="{{-- route('Articals') --}}">المقالات</a>
+                        <a href="{{-- route('Articals') --}}">Create Series</a>
                     </li>
                     <li class='{{-- !request()->routeIs('howUs')?:'active' --}}'>
-                        <a href="{{-- route('howUs') --}}">عن المدونه ؟</a>
+                        <a href="{{-- route('howUs') --}}"> Profile </a>
                     </li>
                 </ul>
             </div>

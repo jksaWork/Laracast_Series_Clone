@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Redis;
 Route::get('redis', function(){
     dd(Redis::get('hello'));
 });
+
 Route::get('/', function () {
     return view('test');
 });
@@ -36,6 +37,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('series' , [FrontController::class , 'index'])->name('series.front');
+Route::get('series/{get_series}' , [FrontController::class, 'show'])->name('front.series.show');
 Route::get('mail', fn() => new RegisterMail(User::find(1)));
     Route::prefix('admin')->group(function(){
         Route::resource('series' , SeriesController::class);

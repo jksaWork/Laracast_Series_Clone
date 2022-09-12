@@ -35,7 +35,7 @@
                                         </div>
 
                                     </div> --}}
-                                    <div class="latest_post_container">
+                                    <div class="latest_post_container p-2">
                                         <div class="latest_post" style='margin-top:20px'>
                                             <div class="latest_post_data">
                                                 <div>
@@ -46,15 +46,16 @@
                                                     </h2>
                                                 </div>
                                                 <div>
-                                                    <a href="#" class="index_link">
+                                                    <span href="" class="index_link">
                                                         {{ $Serie->description }}
-                                                    </a>
+                                                    </span>
                                                 </div>
+                                                <a href="{{ route('front.series.show', $Serie->id) }}">read more</a>
                                             </div>
                                             <div class="latest_post_img">
-                                                <a href="{{ route('series.show' , $Serie->slug) }}" class="index_link">
+                                                <a href="{{ route('front.series.show' , $Serie->id) }}" class="index_link">
                                                     <img src="{{  $Serie->image_url }}"
-                                                    style="width: 200px; height:170px"
+                                                    style="width: 170px; height:170px"
                                                         alt="not found" class="p-2" />
                                                 </a>
                                             </div>
@@ -69,6 +70,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

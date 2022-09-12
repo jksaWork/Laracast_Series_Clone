@@ -76,4 +76,8 @@ class User extends Authenticatable
         $value = Redis::smembers("user:{$this->id}::series:{$series->id}");
         return count($value);
     }
+
+    public function hasSatredSeries(Series $series){
+        return count(Redis::smembers("user:{$this->id}::series:{$series->id}")) > 0;
+    }
 }
