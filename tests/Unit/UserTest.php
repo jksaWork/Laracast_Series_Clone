@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Models\Lesson;
 use App\Models\Series;
 use App\Models\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
 // use PHPUnit\Framework\TestCase;
 use Tests\TestCase;
@@ -86,6 +87,36 @@ class UserTest extends TestCase
         // assertions Setions
         $this->assertTrue($user->hasSatredSeries($series));
         $this->assertFalse($user->hasSatredSeries($series2));
+
+    }
+
+    public function test_check_if_user_can_get_complete_lesson_from_a_series(){
+        // $this->assertTrue(true);
+        $this->withoutExceptionHandling();
+        $this->flashRedis();
+        $user = User::factory()->create();
+        $series = Series::factory()->create();
+        $lesson = Lesson::factory()->create(
+            ['series_id' => $series->id]
+        );
+        $lesson2 = Lesson::factory()->create(
+            ['series_id' => $series->id]
+        );
+
+        $user->completLesson($lesson);
+        $user->completLesson($lesson2);
+        // get Completed Lesson From Spesfic Series
+        $CompletedLessonFromSeries = $user->getCompletedLessonFromSeries($series);
+        $this->assertInstanceOf(Collection::class, $CompletedLessonFromSeries);
+        $this->assertInstanceOf(Lesson::class, $CompletedLessonFromSeries->random());
+        $ids = $CompletedLessonFromSeries->pluck('id')->all();
+
+        // assert If Lesson Ids Exist IN Collections
+        $this->assertTrue(in_array($lesson->id,  $ids));
+        $this->assertTrue(in_array($lesson2->id,  $ids));
+        $this->assertTrue(in_array($lesson->id,  $ids));
+
+
 
     }
 }

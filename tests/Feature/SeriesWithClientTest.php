@@ -41,4 +41,16 @@ class SeriesWithClientTest extends TestCase
     //     ]);
     //     Storage::disk(config('filesystems.default'))->assertExists('series/' . Str::slug($title) . '.png');
     // }
+
+    public function test_online_user_in_system(){
+        $this->assertTrue(true);
+    }
+
+    public function test_admin_can_get_all_Series(){
+        $this->assertTrue(true);
+    }
+
+    public function test_admin_can_get_online_series(){
+        $this->assertTrue(true);
+    }
 }

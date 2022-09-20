@@ -19,11 +19,10 @@
             </div>
             <div class="nav_links">
                 <ul>
-                    @auth
+
                     <li class='{{-- !request()->routeIs('contact')?:'active' --}}'>
-                        <a href="{{ route('get.logout') }}">Logout</a>
+                        <a href="{{-- route('contact') --}}">Home</a>
                     </li>
-                    @endauth
                     <li class='{{-- !request()->routeIs('contact')?:'active' --}}'>
                         <a href="{{-- route('contact') --}}">Series</a>
                     </li>
@@ -33,6 +32,11 @@
                     <li class='{{-- !request()->routeIs('howUs')?:'active' --}}'>
                         <a href="{{-- route('howUs') --}}"> Profile </a>
                     </li>
+                    @auth
+                    <li class='{{-- !request()->routeIs('contact')?:'active' --}}'>
+                        <a href="{{ route('get.logout') }}">Logout</a>
+                    </li>
+                    @endauth
                 </ul>
             </div>
         </div>

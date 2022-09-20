@@ -80,4 +80,15 @@ class User extends Authenticatable
     public function hasSatredSeries(Series $series){
         return count(Redis::smembers("user:{$this->id}::series:{$series->id}")) > 0;
     }
+    public function getCompletedLessonFromSeriesWithRedis(Series $series){
+        return Redis::smembers("user:{$this->id}::series:{$series->id}");
+    }
+
+    public function getCompletedLessonFromSeries(Series $series){
+        $ids = $this->getCompletedLessonFromSeriesWithRedis($series);
+        // dd($ids);
+        // dd(in_array(2 , [2,1]));
+        return collect(Lesson::find($ids));
+
+    }
 }
