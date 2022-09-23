@@ -25,11 +25,14 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+import vueVimeoPlayer from 'vue-vimeo-player'
 
+Vue.use(vueVimeoPlayer)
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('Login', require('./components/Login.vue').default);
 Vue.component('lesson-list', require('./components/LessonsList.vue').default);
 Vue.component('create-lesson', require('./components/Children/create_lesson.vue').default);
+Vue.component('vue-player', require('./components/player.vue').default);
 Vue.use(VueSweetalert2);
 /**
  * Next, we will create a fresh Vue application instance and attach it to

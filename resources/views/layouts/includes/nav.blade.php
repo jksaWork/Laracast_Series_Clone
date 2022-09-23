@@ -24,7 +24,7 @@
                         <a href="{{-- route('contact') --}}">Home</a>
                     </li>
                     <li class='{{-- !request()->routeIs('contact')?:'active' --}}'>
-                        <a href="{{-- route('contact') --}}">Series</a>
+                        <a href="{{ route('series.front') }}">Series</a>
                     </li>
                     <li class='{{-- !request()->routeIs('Articals')?:'active' --}}'>
                         <a href="{{-- route('Articals') --}}">Create Series</a>

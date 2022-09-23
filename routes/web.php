@@ -44,6 +44,7 @@ Route::get('series' , [FrontController::class , 'index'])->name('series.front');
 Route::get('series/{get_series}' , [FrontController::class, 'show'])->name('front.series.show');
 Route::get('watch-series/{get_series}' , [WatchSeriesController::class, 'WatchSeries'])->name('watch.series');
 Route::get('watch-series/{get_series}/lesson/{lesson}' , [WatchSeriesController::class, 'WatchSeriesLesson'])->name('watch.series.lesson');
+Route::get('complete-lesson/{lesson}' , [WatchSeriesController::class, 'completeLesson'])->name('watch.series.lesson')->middleware('auth');
 
 
 Route::get('mail', fn() => new RegisterMail(User::find(1)));

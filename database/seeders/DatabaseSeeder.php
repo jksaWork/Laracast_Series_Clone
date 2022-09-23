@@ -21,15 +21,14 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123456'),
         ]);
         Series::factory()->create([
-            'image_url' => 'series/alwifaq.png',
+            'image_url' => 'alwifaq.png',
         ])->Lessons()->create([
             'title' => 'mohammed',
             'description' => 'mohammed',
             'episode_number' => 200,
-            'vedio_id' => 200,
-
+            'vedio_id' => 750034368,
         ]);
-        Lesson::factory(10)->create();
+        Lesson::factory(5)->create();
     }
 }
 

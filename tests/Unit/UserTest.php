@@ -116,7 +116,30 @@ class UserTest extends TestCase
         $this->assertTrue(in_array($lesson2->id,  $ids));
         $this->assertTrue(in_array($lesson->id,  $ids));
 
-
-
     }
+    public function test_user_can_get_a_completed_lesson(){
+
+        $this->withoutExceptionHandling();
+        $this->flashRedis();
+        $user = User::factory()->create();
+        $series = Series::factory()->create();
+        $lesson = Lesson::factory()->create(
+            ['series_id' => $series->id]
+        );
+        $lesson2 = Lesson::factory()->create(
+            ['series_id' => $series->id]
+        );
+
+        $lesson3 = Lesson::factory()->create(
+            ['series_id' => $series->id]
+        );
+
+        $user->completLesson($lesson);
+        $user->completLesson($lesson2);
+
+        $this->assertTrue($user->hasCompleatedLesson($lesson));
+        $this->assertTrue($user->hasCompleatedLesson($lesson2));
+        $this->assertFalse($user->hasCompleatedLesson($lesson3));
+    }
+
 }

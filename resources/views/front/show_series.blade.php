@@ -9,9 +9,9 @@
                     @auth
                         <div class="text-center">
                             @hasStartedSeries($series)
-                                <a href="{{ route('watch.series' , $series->id) }}" class="btn btn-light mt-5"> Continuo Now</a>
+                                <a href="{{ route('watch.series', $series->id) }}" class="btn btn-light mt-5"> Continuo Now</a>
                             @else
-                                <a href="{{ route('watch.series' , $series->id) }}" class="btn btn-light mt-5"> Start Now</a>
+                                <a href="{{ route('watch.series', $series->id) }}" class="btn btn-light mt-5"> Start Now</a>
                             @endhasStartedSeries
 
                         </div>
@@ -50,7 +50,7 @@
                                             <div class="latest_post_data">
                                                 <div>
                                                     <h2>
-                                                        <a href="#" class="">
+                                                        <a href="{{ route('watch.series.lesson' , ['get_series' => $series->id ,  'lesson' => $Serie->id ]) }}" class="">
                                                             {{ $Serie->title }}
                                                         </a>
                                                     </h2>
@@ -79,4 +79,5 @@
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection

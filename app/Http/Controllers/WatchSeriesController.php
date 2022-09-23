@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lesson;
 use App\Models\Series;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,14 @@ class WatchSeriesController extends Controller
         ]);
     }
 
-    public function WatchSeriesLesson(Series $series){
+    public function WatchSeriesLesson(Series $series , Lesson $lesson){
+        // dd($lesson);
+        return view('watch.lesson' , compact('series', 'lesson'));
+    }
 
+    public function completeLesson(Lesson $lesson){
+        // dd($lesson);
+        auth()->user()->completLesson($lesson);
+        return \response()->json(['message' => 'ok']);
     }
 }

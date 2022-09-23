@@ -86,9 +86,15 @@ class User extends Authenticatable
 
     public function getCompletedLessonFromSeries(Series $series){
         $ids = $this->getCompletedLessonFromSeriesWithRedis($series);
-        // dd($ids);
         // dd(in_array(2 , [2,1]));
         return collect(Lesson::find($ids));
 
+    }
+
+    public function hasCompleatedLesson(Lesson $lesson){
+        return in_array(
+            $lesson->id,
+            $this->getCompletedLessonFromSeriesWithRedis($lesson->Series),
+        );
     }
 }

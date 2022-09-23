@@ -22,4 +22,9 @@ class Series extends Model
     public function Lessons(){
         return $this->hasMany(Lesson::class);
     }
+    public function getLessonOrderByEpesdeo(){
+        return $this->Lessons()->orderBy('episode_number' , 'asc')->get();
+    }
+
 }
+
