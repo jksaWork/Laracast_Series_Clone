@@ -56,7 +56,7 @@
                                         <h6 class="custom_head"><span> Lessons </span></h6>
                                     </div>
                                 </div>
-                                @forelse ($series->getLessonOrderByEpesdeo() as $Serie)
+                                @forelse ($series->getLessonOrderByEpesdeo() as $Lesson)
                                     <div>
                                         {{-- <div class="pb-5">
                                     <div class="d-flex justify-content-between">
@@ -69,13 +69,13 @@
                                         </div>
 
                                     </div> --}}
-                                        <div class="latest_post_container p-1">
+                                        <div class="latest_post_container">
                                             <div class="latest_post" style='margin-top:1px'>
                                                 <div class="latest_post_data">
                                                     <div>
                                                         <h6>
-                                                            <a href="{{ route('front.series.show', $Serie->id) }}" class="">
-                                                                {{ $Serie->title }}
+                                                            <a href="{{ route('watch.series.lesson', ['lesson' =>$Lesson->id , 'get_series' => $Lesson->Series->id ]) }}" class="">
+                                                                {{ $Lesson->title }}
                                                             </a>
                                                         </h6>
                                                     </div>
@@ -84,8 +84,8 @@
                                                     {{-- <a href="{{ route('front.series.show', $Serie->id) }}">watch viedo</a> --}}
                                                 </div>
                                                 <div class="latest_post_img">
-                                                    <a href="{{ route('front.series.show', $Serie->id) }}" class="index_link">
-                                                        <img src="{{ $Serie->image_url }}" style="width: 50px; height:30px"
+                                                    <a href="{{ route('watch.series.lesson', ['lesson' =>$Lesson->id , 'get_series' => $Lesson->Series->id ]) }}" class="index_link">
+                                                        <img src="{{ $Lesson->image_url }}" style="width: 50px; height:30px"
                                                             alt="not found" class="" />
                                                     </a>
                                                 </div>

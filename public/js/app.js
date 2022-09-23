@@ -8236,11 +8236,22 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs.player.pause();
     },
     handelEnd: function handelEnd() {
-      console.log('The Vedio Is End'); //  Swal.fire("Good job!", "You Are Lesson", "success");
-      //     axios.get("complete-lesson/" + this.lesson.id)
-      //     .then((res) => console.log(res))
-      //     .catch((err) => console.log(err));
-      //     console.log('Heelo From Thireds Line');
+      var _this = this;
+
+      console.log('The Vedio Is End');
+      console.log('The Vedio Is End');
+      console.log('The Vedio Is End');
+      console.log('The Vedio Is End');
+      console.log('The Vedio Is End');
+      sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_0___default().fire("Good job!", "You Are Lesson", "success");
+      axios__WEBPACK_IMPORTED_MODULE_2___default().get("/complete-lesson/" + this.lesson.id).then(function (res) {
+        return console.log(res);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+      setTimeout(function () {
+        if (_this.next_url_pro) docemment.location = _this.next_url_pro;
+      }, 2000);
     },
     MouteThePlayers: function MouteThePlayers() {
       // const options = {

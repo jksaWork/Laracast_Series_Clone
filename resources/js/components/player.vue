@@ -48,11 +48,17 @@ export default {
         },
         handelEnd() {
              console.log('The Vedio Is End');
-            //  Swal.fire("Good job!", "You Are Lesson", "success");
-            //     axios.get("complete-lesson/" + this.lesson.id)
-            //     .then((res) => console.log(res))
-            //     .catch((err) => console.log(err));
-            //     console.log('Heelo From Thireds Line');
+             console.log('The Vedio Is End');
+             console.log('The Vedio Is End');
+             console.log('The Vedio Is End');
+             console.log('The Vedio Is End');
+             Swal.fire("Good job!", "You Are Lesson", "success");
+                axios.get("/complete-lesson/" + this.lesson.id)
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err));
+                setTimeout(() => {
+                   if(this.next_url_pro) docemment.location = this.next_url_pro;
+                }, 2000);
              },
         MouteThePlayers() {
             // const options = {
