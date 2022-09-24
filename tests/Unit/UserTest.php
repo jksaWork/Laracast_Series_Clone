@@ -142,4 +142,46 @@ class UserTest extends TestCase
         $this->assertFalse($user->hasCompleatedLesson($lesson3));
     }
 
+    public function test_if_user_can_get_list_of_series_he_was_watched(){
+        // $this->getSeriesWasWatched
+        $this->withoutExceptionHandling();
+        $this->flashRedis();
+        $user = User::factory()->create();
+        $series = Series::factory()->create();
+        $series2 = Series::factory()->create();
+        $lesson = Lesson::factory()->create(
+            ['series_id' => $series->id]
+        );
+        $lesson2 = Lesson::factory()->create(
+            ['series_id' => $series2->id]
+        );
+
+        $user->completLesson($lesson);
+        $user->completLesson($lesson2);
+
+        $WatchedSeries = $user->getSeriesWasWatched();
+        $this->assertInstanceOf(Collection::class, $WatchedSeries);
+        $this->assertTrue($WatchedSeries->count() == 2);
+        $this->assertTrue(in_array($WatchedSeries->random()->id  , [$series->id, $series2->id]));
+    }
+
+    public function test_user_can_get_count_of_lesson_completed(){
+        $this->withoutExceptionHandling();
+        $this->flashRedis();
+        $user = User::factory()->create();
+        $series = Series::factory()->create();
+        $series2 = Series::factory()->create();
+        $lesson = Lesson::factory()->create(
+            ['series_id' => $series->id]
+        );
+        $lesson2 = Lesson::factory()->create(
+            ['series_id' => $series2->id]
+        );
+        $user->completLesson($lesson);
+        $user->completLesson($lesson2);
+        $count = $user->getCountCompleteLesson();
+        // dd($count);
+        $this->assertTrue($count == 2);
+    }
+
 }

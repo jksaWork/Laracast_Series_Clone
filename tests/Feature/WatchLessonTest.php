@@ -35,7 +35,6 @@ class WatchLessonTest extends TestCase
         $this->assertInstanceOf(Collection::class, $lessons);
         $this->assertEquals($lessons[1]->id , $lesson->id);
         $this->assertEquals($lessons[0]->id , $lesson2->id);
-
-        // $response->assertStatus(200);
     }
+
 }

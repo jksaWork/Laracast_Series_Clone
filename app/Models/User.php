@@ -36,6 +36,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
     /**
      * The attributes that should be cast.
      *
@@ -72,7 +76,6 @@ class User extends Authenticatable
      * @param \App\Mdoels\Series $series;
      */
     public function getSeriesCompleateLesson(Series $series){
-        // return Redis::smembers();
         $value = Redis::smembers("user:{$this->id}::series:{$series->id}");
         return count($value);
     }
@@ -96,5 +99,26 @@ class User extends Authenticatable
             $lesson->id,
             $this->getCompletedLessonFromSeriesWithRedis($lesson->Series),
         );
+    }
+
+
+    public function getSeriesWasWatched(){
+        $keyes = Redis::keys("user:{$this->id}::series:*");
+        $ids  = [];
+        foreach ($keyes as $value) :
+            $id = explode(':' , $value)[4];
+            array_push($ids, $id);
+        endforeach;
+        return collect(Series::find($ids));
+    }
+
+    public function getCountCompleteLesson(){
+        $keys = (Redis::keys("user:{$this->id}::series:*"));
+        $lesson_count = 0;
+        foreach ($keys  as $value) :
+            $key = explode('_', $value)[2];
+            $lesson_count = $lesson_count + count(Redis::smembers($key));
+        endforeach;
+        return $lesson_count;
     }
 }

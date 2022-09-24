@@ -29,12 +29,17 @@
                     <li class='{{-- !request()->routeIs('Articals')?:'active' --}}'>
                         <a href="{{-- route('Articals') --}}">Create Series</a>
                     </li>
-                    <li class='{{-- !request()->routeIs('howUs')?:'active' --}}'>
-                        <a href="{{-- route('howUs') --}}"> Profile </a>
-                    </li>
+
                     @auth
+                    <li class='{{-- !request()->routeIs('howUs')?:'active' --}}'>
+                        <a href="{{ route('profile', auth()->user()->name) }}"> Profile </a>
+                    </li>
                     <li class='{{-- !request()->routeIs('contact')?:'active' --}}'>
                         <a href="{{ route('get.logout') }}">Logout</a>
+                    </li>
+                    @else
+                    <li class='{{-- !request()->routeIs('contact')?:'active' --}}'>
+                        <a href="{{ route('login') }}">login</a>
                     </li>
                     @endauth
                 </ul>

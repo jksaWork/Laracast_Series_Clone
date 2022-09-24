@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ConfigrationControler;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\profileController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\WatchSeriesController;
 use App\Mail\RegisterMail;
@@ -52,3 +53,5 @@ Route::prefix('admin')->group(function(){
     Route::resource('{get_series}/lessons' , App\Http\Controllers\LessonController::class);
 });
 
+
+Route::get('profile/{user}' , [profileController::class , 'index'])->name('profile');

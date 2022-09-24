@@ -29,4 +29,8 @@ class CreateLessonTest extends TestCase
             'title' => 'Lesson number 1',
         ]);
     }
+
+    public function test_Admin_also_create_lesson_by_series_id(){
+        $this->assertTrue(true);
+    }
 }

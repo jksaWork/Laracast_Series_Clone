@@ -15,6 +15,23 @@ class LessonTest extends TestCase
      *
      * @return void
      */
+
+    public function test_check_if_lesson_has_next_and_prevois_lesson(){
+
+        $this->withoutExceptionHandling();
+        $series = Series::factory()->create();
+        $lesson = Lesson::factory()->create(
+            ['series_id' => $series->id, 'episode_number' => 2]
+        );
+        $lesson2 = Lesson::factory()->create(
+            ['series_id' => $series->id , 'episode_number' => 3]
+        );
+        $this->assertTrue($lesson->hasNext());
+        $this->assertFalse($lesson->hasPrevious());
+        $this->assertFalse($lesson2->hasNext());
+        $this->assertTrue($lesson2->hasPrevious());
+    }
+
     public function test_check_if_can_get_previoesly_lesson_and_and_next_lesson()
     {
 
@@ -37,19 +54,5 @@ class LessonTest extends TestCase
         $this->assertEquals($lesson3->getPrevious()->id, $lesson2->id);
     }
 
-    public function test_check_if_lesson_has_next_and_prevois_lesson(){
 
-        $this->withoutExceptionHandling();
-        $series = Series::factory()->create();
-        $lesson = Lesson::factory()->create(
-            ['series_id' => $series->id, 'episode_number' => 2]
-        );
-        $lesson2 = Lesson::factory()->create(
-            ['series_id' => $series->id , 'episode_number' => 3]
-        );
-        $this->assertTrue($lesson->hasNext());
-        $this->assertFalse($lesson->hasPrevious());
-        $this->assertFalse($lesson2->hasNext());
-        $this->assertTrue($lesson2->hasPrevious());
-    }
 }
