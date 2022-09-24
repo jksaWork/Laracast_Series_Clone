@@ -271,6 +271,9 @@ nav {
 .latest_post:hover {
   background: #eee;
 }
+.latest_post.watched{
+    background: #eaf5ed;
+}
 .count_articals {
   order: 1;
   max-width: 10%;

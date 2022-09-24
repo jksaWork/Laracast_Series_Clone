@@ -8239,10 +8239,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       console.log('The Vedio Is End');
-      console.log('The Vedio Is End');
-      console.log('The Vedio Is End');
-      console.log('The Vedio Is End');
-      console.log('The Vedio Is End');
       sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_0___default().fire("Good job!", "You Are Lesson", "success");
       axios__WEBPACK_IMPORTED_MODULE_2___default().get("/complete-lesson/" + this.lesson.id).then(function (res) {
         return console.log(res);
@@ -8250,7 +8246,7 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(err);
       });
       setTimeout(function () {
-        if (_this.next_url_pro) docemment.location = _this.next_url_pro;
+        if (_this.next_url_pro) document.location = _this.next_url_pro;
       }, 2000);
     },
     MouteThePlayers: function MouteThePlayers() {

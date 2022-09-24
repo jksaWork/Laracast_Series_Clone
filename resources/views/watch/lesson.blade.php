@@ -70,8 +70,9 @@
 
                                     </div> --}}
                                         <div class="latest_post_container">
-                                            <div class="latest_post" style='margin-top:1px'>
-                                                <div class="latest_post_data">
+                                            <div class="latest_post {{ !auth()->user()->hasCompleatedLesson($Lesson) ?: 'watched' }}"
+                                             style='margin-top:1px'>
+                                                <div class="latest_post_data ">
                                                     <div>
                                                         <h6>
                                                             <a href="{{ route('watch.series.lesson', ['lesson' =>$Lesson->id , 'get_series' => $Lesson->Series->id ]) }}" class="">
