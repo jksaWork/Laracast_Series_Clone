@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Lesson;
 use App\Models\Series;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use PhpParser\ErrorHandler\Collecting;
 // use PHPUnit\Framework\TestCase;
@@ -54,5 +55,26 @@ class LessonTest extends TestCase
         $this->assertEquals($lesson3->getPrevious()->id, $lesson2->id);
     }
 
+    public function test_get_next_lesson_to_Watch(){
 
+        $this->withoutExceptionHandling();
+        $series = Series::factory()->create();
+        $user = User::factory()->create();
+        $lesson = Lesson::factory()->create(
+            ['series_id' => $series->id, 'episode_number' => 2]
+        );
+        $lesson2 = Lesson::factory()->create(
+            ['series_id' => $series->id , 'episode_number' => 3]
+        );
+        // dd($lesson2);
+        $lesson3 = Lesson::factory()->create(
+            ['series_id' => $series->id , 'episode_number' => 4]
+        );
+        $user->completLesson($lesson);
+        $lessonNextToWatch = $user->getNextLessonToWatch($series);
+        $this->assertEquals($lesson2->id, $lessonNextToWatch->id);
+        $user->completLesson($lesson2);
+        $lessonNextToWatch = $user->getNextLessonToWatch($series);
+        $this->assertEquals($lesson3->id, $lessonNextToWatch->id);
+    }
 }

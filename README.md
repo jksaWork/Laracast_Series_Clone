@@ -25,6 +25,8 @@ has Multi Objects in the Project as Lesson And viedos and Users Seriess   as:
 - **[Vue Js ](https://vehikl.com/)**
 - **[Larave](https://tighten.co)**
 - **[Redis ](https://kirschbaumdevelopment.com)**
+- **[Laravel Casher ](https://kirschbaumdevelopment.com)**
+- **[Vimoe Js  ](https://kirschbaumdevelopment.com)**       
 
 ## Contributing
 

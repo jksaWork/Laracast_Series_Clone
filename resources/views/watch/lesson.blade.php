@@ -70,7 +70,11 @@
 
                                     </div> --}}
                                         <div class="latest_post_container">
-                                            <div class="latest_post {{ !auth()->user()->hasCompleatedLesson($Lesson) ?: 'watched' }}"
+                                            <div class="latest_post
+                                            @if(auth()->check())
+                                            {{ !auth()->user()->hasCompleatedLesson($Lesson) ?: 'watched' }}
+                                            @endif
+                                            "
                                              style='margin-top:1px'>
                                                 <div class="latest_post_data ">
                                                     <div>

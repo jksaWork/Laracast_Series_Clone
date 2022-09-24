@@ -121,4 +121,10 @@ class User extends Authenticatable
         endforeach;
         return $lesson_count;
     }
+
+    public function getNextLessonToWatch(Series $series){
+        $ids = $this->getCompletedLessonFromSeriesWithRedis($series);
+        $id =end($ids);
+        return Lesson::find($id)->getNext();
+    }
 }
